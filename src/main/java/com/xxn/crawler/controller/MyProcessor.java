@@ -33,7 +33,16 @@ public class MyProcessor implements PageProcessor {
 
     public void start() {
         Spider.create(new MyProcessor())
-                .addUrl("https://www.hhu.edu.cn/2024/0702/c166a285725/page.htm")
+                .addUrl("https://www.jd.com/")
+                .addPipeline(new ConsolePipeline())
+                .addPipeline(new JsonFilePipeline("D:\\webmagic\\"))
+                .thread(3)
+                .run();
+    }
+
+    public static void main(String[] args) {
+        Spider.create(new MyProcessor())
+                .addUrl("https://www.jd.com/")
                 .addPipeline(new ConsolePipeline())
                 .addPipeline(new JsonFilePipeline("D:\\webmagic\\"))
                 .thread(3)
