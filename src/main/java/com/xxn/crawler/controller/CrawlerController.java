@@ -1,11 +1,10 @@
 package com.xxn.crawler.controller;
 
 import com.xxn.crawler.result.Result;
-import com.xxn.crawler.utiles.GetByUrl;
+import com.xxn.crawler.crawlerUtiles.GetAllByUrl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import us.codecraft.webmagic.Spider;
 
 /**
  *
@@ -20,7 +19,7 @@ public class CrawlerController {
 
     @RequestMapping("/start")
     public void start(String url) {
-        GetByUrl.start("https://www.jd.com/");
+        GetAllByUrl.start("https://www.jd.com/");
     }
 
     /***
