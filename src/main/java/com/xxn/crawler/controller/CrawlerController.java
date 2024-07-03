@@ -2,6 +2,7 @@ package com.xxn.crawler.controller;
 
 import com.xxn.crawler.result.Result;
 import com.xxn.crawler.crawlerUtiles.GetAllByUrl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,23 +18,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/crawler")
 public class CrawlerController {
 
-    @RequestMapping("/start")
-    public void start(String url) {
-        GetAllByUrl.start("https://www.jd.com/");
+    @Autowired
+    private GetAllByUrl spider;
+
+   /***
+    * @description
+    * @param: url 要爬取的网站url
+    * @param: path 保存路径
+    * @return com.xxn.crawler.result.Result<java.lang.String>
+    * @author Marchino
+    * @date 21:56 2024/7/3
+    */
+   @GetMapping("/getAllByUrl")
+   public Result<String> getByUrl(String url, String path) {
+        spider = new GetAllByUrl(url, path);
+        String stringJson = spider.start();
+        return Result.success("爬取成功");
     }
 
     /***
-     * @description 传入一个url，使用默认配置， 获取该url的页面信息,不对信息进行任何处理
-     * @param: url
-     * @return void
+     * @description 停止爬取
+     * @param:
+     * @return com.xxn.crawler.result.Result<java.lang.String>
      * @author Marchino
-     * @date 11:04 2024/7/3
+     * @date 22:00 2024/7/3
      */
-    @GetMapping("/getByUrl")
-    public Result<String> getByUrl(String url) {
-        return
-                null;
+    public Result<String> stop() {
+        spider.stop();
+        return Result.success("爬取结束");
     }
+
 
 
 }
