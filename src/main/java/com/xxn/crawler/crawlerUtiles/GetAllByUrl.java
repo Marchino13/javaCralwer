@@ -1,12 +1,18 @@
 package com.xxn.crawler.crawlerUtiles;
 
 import com.xxn.crawler.controller.MyProcessor;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.pipeline.FilePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.selector.Html;
+import us.codecraft.webmagic.selector.Selectable;
+
+import java.util.List;
 
 /**
  *
@@ -32,8 +38,16 @@ public class GetAllByUrl implements PageProcessor {
     private Site site = Site.me().setRetryTimes(1).setSleepTime(1000);
     @Override
     public void process(Page page) {
-        String html = page.getHtml().toString();
-        page.putField("html", html);
+        //访问黑马的首页
+        //解析首页中所有的链接地址
+        Html html = page.getHtml();
+        //html.css("a","href");
+        Selectable links = html.links();
+        List<String> allLinks = links.all();
+        //把链接地址添加到访问队列中
+        page.addTargetRequests(allLinks);
+        //把页面传递给pipeline，由pipeline保存到磁盘
+        page.putField("html", html.get());
     }
 
     @Override
@@ -49,7 +63,7 @@ public class GetAllByUrl implements PageProcessor {
      * @date 21:59 2024/7/3
      */
     public String start(){
-        spider = Spider.create(new MyProcessor())
+        spider = Spider.create(new GetAllByUrl())
                 .addUrl(url)
                 .addPipeline(new FilePipeline(path))
                 .thread(5);
