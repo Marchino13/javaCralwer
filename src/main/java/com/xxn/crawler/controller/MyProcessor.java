@@ -30,7 +30,6 @@ public class MyProcessor implements PageProcessor {
         return site;
     }
 
-
     public void start() {
         Spider.create(new MyProcessor())
                 .addUrl("https://www.jd.com/")
@@ -40,13 +39,5 @@ public class MyProcessor implements PageProcessor {
                 .run();
     }
 
-    public static void main(String[] args) {
-        Spider.create(new MyProcessor())
-                .addUrl("https://www.jd.com/")
-                .addPipeline(new ConsolePipeline())
-                .addPipeline(new JsonFilePipeline("D:\\webmagic\\"))
-                .thread(3)
-                .run();
-    }
 
 }

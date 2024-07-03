@@ -1,7 +1,7 @@
 package com.xxn.crawler.controller;
 
 import com.xxn.crawler.result.Result;
-import com.xxn.crawler.utiles.CrawlerUtils;
+import com.xxn.crawler.utiles.GetByUrl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,9 +20,7 @@ public class CrawlerController {
 
     @RequestMapping("/start")
     public void start(String url) {
-        System.out.println(url);
-        MyProcessor myProcessor = new MyProcessor();
-        myProcessor.start();
+        GetByUrl.start("https://www.jd.com/");
     }
 
     /***
@@ -33,15 +31,10 @@ public class CrawlerController {
      * @date 11:04 2024/7/3
      */
     @GetMapping("/getByUrl")
-    public Result<String> getByUrl(String url){
-        System.out.println(url);
-        CrawlerUtils crawlerUtils = new CrawlerUtils();
-        crawlerUtils.getByUrl(url);
-        Spider.create(crawlerUtils).addUrl(url).thread(5).run();
-        return Result.success("爬取成功");
+    public Result<String> getByUrl(String url) {
+        return
+                null;
     }
-
-
 
 
 }
