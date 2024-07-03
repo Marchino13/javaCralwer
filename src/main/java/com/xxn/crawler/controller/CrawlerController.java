@@ -2,9 +2,7 @@ package com.xxn.crawler.controller;
 
 import com.xxn.crawler.result.Result;
 import com.xxn.crawler.utiles.CrawlerUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import us.codecraft.webmagic.Spider;
 
 /**
@@ -17,6 +15,23 @@ import us.codecraft.webmagic.Spider;
 @RestController
 @RequestMapping("/crawler")
 public class CrawlerController {
+
+//    @RequestMapping(value = "/login",method = RequestMethod.POST)
+//    public String login(@RequestBody String userStr){ // 把前台发过来的 json字符串 转成java对象
+//        System.out.println(userStr);
+//        return "SUCCESS";
+//    }
+
+    @RequestMapping(value = "/url",method = RequestMethod.POST)
+    public String getUrl(@RequestBody String url){ // 把前台发过来的 json字符串 转成java对象
+        System.out.println(url);
+        if(url.equals("404")) return "False";
+
+
+
+        return "Success";
+    }
+
 
     @RequestMapping("/start")
     public void start(String url) {
